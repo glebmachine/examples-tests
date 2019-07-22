@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--
+  Ультра базовый пример тестов, без сборщиков, инфраструктуры и тп
+  Только CDN и тесты бегут прямо в браузере. На основе статьи Ильи Кантора https://learn.javascript.ru/testing
+-->
+<body>
+  <head>
+    <title>Пример тестов</title>
+    <!-- подключаем стили Mocha, для отображения результатов -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.css">
+    <!-- подключаем библиотеку Mocha -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/2.1.0/mocha.js"></script>
+    <script>
+      mocha.setup('bdd');
+    </script>
+
+    <!-- подключаем chai -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/2.0.0/chai.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chai-dom@1.8.1/chai-dom.js"></script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <li><a href="#raz">raz</a></li>
+        <li><a href="#dva">dva</a></li>
+        <li><a href="#tri">tri</a></li>
+      </nav>
+    </header>
+    <section class="articles">
+      <article>
+        <h1>Example header</h1>
+        <p>
+          Example body
+        </p>
+      </article>
+      <article>
+        <h1>Example header</h1>
+        <p>
+          Example body
+        </p>
+      </article>
+      <article>
+        <h1>Example header</h1>
+        <p>
+          Example body
+        </p>
+      </article>
+      <article>
+        <h1>Example header</h1>
+        <p>
+          Example body
+        </p>
+      </article>
+    </section>
+    <footer>
+      <span class="copyright">Copy (c)</span>
+    </footer>
+
+    <script>
+      describe('Проверяем структуру документа', function() {
+        describe('Лайаут', () => {
+          it('head', function() {
+            chai.expect(document.querySelector('head')).to.exist;
+          });
+
+          it('title', function() {
+            chai.expect(document.querySelector('title')).to.exist;
+            chai.expect(document.querySelector('title')).to.have.text('Пример тестов');
+          });
+
+          it('боди', function() {
+            chai.expect(document.querySelector('body')).to.exist;
+            chai.expect(document.querySelector('body')).not.empty;
+          });
+        });
+
+      describe('футер', () => {
+        it('есть элемент', function() {
+          chai.expect(document.querySelector('footer')).to.exist;
+        });
+        it('есть копирайт', function() {
+          chai.expect(document.querySelector('footer .copyright')).to.exist;
+          chai.expect(document.querySelector('footer .copyright')).to.have.text('Copy (c)');
+        });
+      });
+
+      describe('хедер', () => {
+        it('есть элемент', function() {
+          chai.expect(document.querySelector('header')).to.exist;
+        });
+        it('есть меню', function() {
+          chai.expect(document.querySelector('header nav')).to.exist;
+        });
+        it('в меню 3 элемента', function() {
+          chai.expect(document.querySelectorAll('header nav li').length).to.be.equal(3);
+        });
+        it('в каждом элементе меню есть ссылки', function() {
+          chai.expect(document.querySelectorAll('header nav li a').length).to.be.equal(3);
+        });
+        it('в каждой ссылке есть аттрибут href', function() {
+          chai.expect(document.querySelectorAll('header nav li a[href]').length).to.be.equal(3);
+        });
+      });
+
+
+
+      describe('список публикаций', () => {
+        it('есть список', function() {
+          chai.expect(document.querySelector('section.articles')).to.exist;
+        });
+        it('В нем 4 публикации', function() {
+          chai.expect(document.querySelectorAll('section.articles article').length).to.be.equal(4);
+        });
+        it('В каждой есть заголовок', function() {
+          chai.expect(document.querySelectorAll('section.articles article h1').length).to.be.equal(4);
+        });
+        it('В каждой есть описание', function() {
+          chai.expect(document.querySelectorAll('section.articles article p').length).to.be.equal(4);
+        });
+      });
+    });
+    </script>
+    <div id="mocha"></div>
+    <script>
+      mocha.run();
+    </script>
+  </body>
+</body>
